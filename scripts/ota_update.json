@@ -1,0 +1,13 @@
+{
+  "Message":"Update Available",
+  "Manufacturer":"Infineon",
+  "ManufacturerId":"ABCD123",
+  "Product":"XMC7000",
+  "SerialNumber":"ABCD213N0001",
+  "Board":"APP_KIT_XMC72_EVK",
+  "Version":"1.0.0",
+  "Connection":"MQTT",
+  "Broker":"192.168.0.10",
+  "Port":"8884",
+  "UniqueTopicName":"replace"
+}
