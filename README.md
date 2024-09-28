@@ -14,26 +14,29 @@ Build the MCUboot-based bootloader application outside of the OTA MQTT applicati
 
 [View this README on GitHub.](https://github.com/Infineon/mtb-example-ethernet-ota-mqtt)
 
-[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyNDAxMDIiLCJTcGVjIE51bWJlciI6IjAwMi00MDEwMiIsIkRvYyBUaXRsZSI6Ik9UQSBmaXJtd2FyZSB1cGRhdGUgdXNpbmcgTVFUVCIsInJpZCI6InNyZHMiLCJEb2MgdmVyc2lvbiI6IjEuMC4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
+[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyNDAxMDIiLCJTcGVjIE51bWJlciI6IjAwMi00MDEwMiIsIkRvYyBUaXRsZSI6Ik9UQSBmaXJtd2FyZSB1cGRhdGUgdXNpbmcgTVFUVCIsInJpZCI6InNyZHMiLCJEb2MgdmVyc2lvbiI6IjIuMC4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
 
 ## Requirements
 
 - [ModusToolbox&trade;](https://www.infineon.com/modustoolbox) v3.2 or later (tested with v3.2)
-- Board support package (BSP) minimum required version: 4.0.0
+- Board support package (BSP) minimum required version: 5.0.0
 - Programming language: C
-- Other tools: Python v3.8.10 or later
+- Other tools: Python v3.8.10
 - Associated parts: [XMC7000 MCU](https://www.infineon.com/cms/en/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-cortex-m/)
 
 ## Supported toolchains (make variable 'TOOLCHAIN')
 
 - GNU Arm&reg; Embedded Compiler v11.3.1 (`GCC_ARM`) – Default value of `TOOLCHAIN`
-- Arm&reg; Compiler v6.16 (`ARM`)
-- IAR C/C++ Compiler v9.40.2 (`IAR`)
+- Arm&reg; Compiler v6.22 (`ARM`)
+- IAR C/C++ Compiler v9.50.2 (`IAR`)
+
+> **Note:** This code example currently does not support the Arm&reg; Compiler for XMC7100 device.
 
 ## Supported kits (make variable 'TARGET')
 
 - [XMC7200 Evaluation Kit](https://www.infineon.com/KIT_XMC72_EVK) (`KIT_XMC72_EVK`) – Default value of `TARGET`
 - [XMC7200 Evaluation Kit](https://www.infineon.com/KIT_XMC72_EVK) (`KIT_XMC72_EVK_MUR_43439M2`)
+- [XMC7100 Evaluation Kit](https://www.infineon.com/KIT_XMC71_EVK_LITE_V1) (`KIT_XMC71_EVK_LITE_V1`)
 
 ## Hardware setup
 
@@ -196,6 +199,7 @@ The [mtb-example-mcuboot-basic](https://github.com/Infineon/mtb-example-mcuboot-
    Target      | Supported JSON files
    ----------- |----------------------------------
    KIT_XMC72_EVK <br> KIT_XMC72_EVK_MUR_43439M2 | *xmc7200_int_overwrite_single.json* <br> *xmc7200_int_swap_single.json*
+   KIT_XMC71_EVK_LITE_V1 | *xmc7100_int_overwrite_single.json* <br> *xmc7100_int_swap_single.json*
 
    <br>
 
@@ -216,10 +220,10 @@ The [mtb-example-mcuboot-basic](https://github.com/Infineon/mtb-example-mcuboot-
     > **Note:** For Linux and macOS platforms, use `python3` instead of `python` in the following command:
 
       ```
-      python -m pip install -r requirements.txt
+      python -m pip install paho-mqtt==1.6.1
       ```
       ```
-      python -m pip install --upgrade cysecuretools==5.0.0
+      python -m pip install --upgrade cysecuretools
       ```
 
     > **Note:** *cysecuretools* is used for signing the image for XMC7000 MCUs.
@@ -347,13 +351,7 @@ This code example uses the locally installable Mosquitto that runs on your compu
 
 2. Navigate to the *\<OTA_MQTT>/scripts* folder.
 
-3. Run the following command to ensure that the required Python modules are installed.
-
-      ```
-      pip install -r requirements.txt
-      ```
-
-4. Edit the *\<OTA_MQTT>/scripts/publisher.py* file to configure your MQTT publisher (MQTT server).
+3. Edit the *\<OTA_MQTT>/scripts/publisher.py* file to configure your MQTT publisher (MQTT server).
 
    1. Modify the value of the `BOARD` variable to your selected `TARGET` in the following format.
 
@@ -378,7 +376,7 @@ This code example uses the locally installable Mosquitto that runs on your compu
    5. Ensure that the value of the `BROKER_PORT` variable is `8883`.
        > **Note:** If you are using the local MQTT broker (e.g., Mosquitto broker), ensure that the value of `BROKER_PORT` variable is `8884`. Currently in the *publisher.py* file conditional `if-else` block is used to automatically select a `BROKER_PORT` value based on the selected MQTT broker.
 
-5. Ensure that the certificate and key file names in the *\<OTA_MQTT>/scripts* folder and following variables value in the *\<OTA_MQTT>/scripts/publisher.py* file are same.
+4. Ensure that the certificate and key file names in the *\<OTA_MQTT>/scripts* folder and following variables value in the *\<OTA_MQTT>/scripts/publisher.py* file are same.
       - `ca_certs` = "aws_ca.crt"
       - `certfile` = "aws_client.crt"
       - `keyfile`  = "aws_private.key"
@@ -386,7 +384,7 @@ This code example uses the locally installable Mosquitto that runs on your compu
       These variables are present under the `AMAZON BROKER` section at the last line in the *\<OTA_MQTT>/scripts/publisher.py* file.
       > **Note:** If you are using the local MQTT broker (e.g., Mosquitto broker), ensure that the certificate and key file names in the *\<OTA_MQTT>/scripts* folder and these variables value in the *\<OTA_MQTT>/scripts/publisher.py* file under the `MOSQUITTO_BROKER_LOCAL_ADDRESS` section are the same. Currently in the *publisher.py* file, the conditional `if-else` block is used to automatically select the default certificate and key file names based on the selected MQTT broker.
 
-6. Run the *publisher.py* Python script.
+5. Run the *publisher.py* Python script.
 
     The scripts take arguments such as the kit name, broker URL, and file path. For details on the supported arguments and their usage, execute the following command:
 
@@ -422,6 +420,7 @@ This code example uses the locally installable Mosquitto that runs on your compu
    Target      | `PLATFORM` value
    ----------- |----------------------------------
    KIT_XMC72_EVK <br> KIT_XMC72_EVK_MUR_43439M2 | XMC7200
+   KIT_XMC71_EVK_LITE_V1 | XMC7100
 
    <br>
 
@@ -434,6 +433,7 @@ This code example uses the locally installable Mosquitto that runs on your compu
    Target      | Supported JSON files
    ----------- |----------------------------------
    KIT_XMC72_EVK <br> KIT_XMC72_EVK_MUR_43439M2 | *xmc7200_int_overwrite_single.json* <br> *xmc7200_int_swap_single.json*
+   KIT_XMC71_EVK_LITE_V1 | *xmc7100_int_overwrite_single.json* <br> *xmc7100_int_swap_single.json*
 
    <br>
 
@@ -698,6 +698,7 @@ The MCUboot-based bootloader application includes a sample public key (*cypress-
 
 > **Note:** See [Security](https://github.com/Infineon/mtb-example-mcuboot-basic/blob/master/README.md#security) to learn more about the image authentication feature of MCUboot.
 
+Currently this code example uses the TLS v1.2. To use the TLS v1.3, uncomment the `MBEDTLS_SSL_PROTO_TLS1_3` and `FORCE_TLS_VERSION MBEDTLS_SSL_VERSION_TLS1_3` defines in the mbedtls_user_config.h file. However, note that the socket receive fails if the application establishes TLS v1.3 connection to a server where session tickets are enabled. This is due to a bug in third-party MBEDTLS library.
 
 ### Resources and settings
 
@@ -737,6 +738,7 @@ Document title: *CE240102* – *OTA firmware update using MQTT*
  Version | Description of change
  ------- | ---------------------
  1.0.0   | New code example
+ 2.0.0   | Updated to support Ethernet Connection Manager (ECM) v2.0 <br> Added support for KIT_XMC71_EVK_LITE_V1
 <br>
 
 All referenced product or service names and trademarks are the property of their respective owners.

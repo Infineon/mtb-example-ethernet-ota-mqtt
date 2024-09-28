@@ -324,8 +324,10 @@ def signal_handling(signum,frame):
    terminate = True
 
 # take over the signals (SIGINT - MAC & Linux, SIGBREAK - Windows
-signal.signal(signal.SIGINT,signal_handling)
-signal.signal(signal.SIGBREAK,signal_handling)
+if sys.platform == 'win32':
+    signal.signal(signal.SIGBREAK,signal_handling)
+else:
+    signal.signal(signal.SIGINT,signal_handling)
 
 #==============================================================================
 # Logging functions
@@ -872,7 +874,7 @@ if __name__ == "__main__":
     print("Infineon Test MQTT Publisher.")
     print("Usage: 'python publisher.py [tls] [-l] [-b <broker>] [-k <kit>] [-f <filepath>]'")
     print("<broker>       | [a] or [amazon] | [e] or [eclipse] | [m] or [mosquitto] | [ml] or [mosquitto_local] |")
-    print("<kit>          KIT_XMC72_EVK | KIT_XMC72_EVK_MUR_43439M2 |")
+    print("<kit>          KIT_XMC72_EVK | KIT_XMC72_EVK_MUR_43439M2 | KIT_XMC71_EVK_LITE_V1 |")
     print("<filepath>     The location of the OTA Image file to server to the device")
     print("Defaults: <non-TLS>")
     print("        : -f " + OTA_IMAGE_FILE)
