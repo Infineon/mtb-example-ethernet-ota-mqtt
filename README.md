@@ -8,21 +8,23 @@ MCUboot is a "secure" bootloader for 32-bit MCUs. For more details, see the [REA
 
 The over-the-air update middleware library enables the OTA feature. For more details, see the [ota-update](https://github.com/Infineon/ota-update) middleware repository on GitHub.
 
-The ota-update middleware can function independently and work with any bootloader, as long as the required OTA update handling storage APIs are implemented and registered with OTA agent by the user. This example enables the MCUboot support with the help of ota-bootloader-abstraction middleware. For more details, see [README](https://github.com/Infineon/ota-bootloader-abstraction/blob/master/README.md) of the [ota-bootloader-abstraction](https://github.com/Infineon/ota-bootloader-abstraction) middleware.
+The ota-update middleware can function independently and work with any bootloader, as long as the required OTA update handling storage APIs are implemented and registered with the OTA agent by the user. This example enables MCUboot support with the help of ota-bootloader-abstraction middleware. For more details, see [README](https://github.com/Infineon/ota-bootloader-abstraction/blob/master/README.md) of the [ota-bootloader-abstraction](https://github.com/Infineon/ota-bootloader-abstraction) middleware.
 
 Build the MCUboot-based bootloader application outside of the OTA MQTT application. It is programmed separately to the device before flashing the OTA MQTT application and is not updated for the life of the device.
 
 [View this README on GitHub.](https://github.com/Infineon/mtb-example-ethernet-ota-mqtt)
 
-[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyNDAxMDIiLCJTcGVjIE51bWJlciI6IjAwMi00MDEwMiIsIkRvYyBUaXRsZSI6Ik9UQSBmaXJtd2FyZSB1cGRhdGUgdXNpbmcgTVFUVCIsInJpZCI6InNyZHMiLCJEb2MgdmVyc2lvbiI6IjIuMC4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
+[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyNDAxMDIiLCJTcGVjIE51bWJlciI6IjAwMi00MDEwMiIsIkRvYyBUaXRsZSI6Ik9UQSBmaXJtd2FyZSB1cGRhdGUgdXNpbmcgTVFUVCIsInJpZCI6InNyZHMiLCJEb2MgdmVyc2lvbiI6IjIuMS4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
+
 
 ## Requirements
 
-- [ModusToolbox&trade;](https://www.infineon.com/modustoolbox) v3.2 or later (tested with v3.2)
+- [ModusToolbox&trade;](https://www.infineon.com/modustoolbox) v3.2 or later (tested with v3.3)
 - Board support package (BSP) minimum required version: 5.0.0
 - Programming language: C
 - Other tools: Python v3.8.10
-- Associated parts: [XMC7000 MCU](https://www.infineon.com/cms/en/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-cortex-m/)
+- Associated parts: [XMC7000 MCU](https://www.infineon.com/cms/en/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-cortex-m/32-bit-xmc7000-industrial-microcontroller-arm-cortex-m7)
+
 
 ## Supported toolchains (make variable 'TOOLCHAIN')
 
@@ -32,15 +34,18 @@ Build the MCUboot-based bootloader application outside of the OTA MQTT applicati
 
 > **Note:** This code example currently does not support the Arm&reg; Compiler for XMC7100 device.
 
+
 ## Supported kits (make variable 'TARGET')
 
 - [XMC7200 Evaluation Kit](https://www.infineon.com/KIT_XMC72_EVK) (`KIT_XMC72_EVK`) – Default value of `TARGET`
 - [XMC7200 Evaluation Kit](https://www.infineon.com/KIT_XMC72_EVK) (`KIT_XMC72_EVK_MUR_43439M2`)
 - [XMC7100 Evaluation Kit](https://www.infineon.com/KIT_XMC71_EVK_LITE_V1) (`KIT_XMC71_EVK_LITE_V1`)
 
+
 ## Hardware setup
 
 This example uses the board's default configuration. See the kit user guide to ensure that the board is configured correctly.
+
 
 ## Software setup
 
@@ -51,6 +56,7 @@ See the [ModusToolbox&trade; tools package installation guide](https://www.infin
 2. This example implements a generic MQTT client that can connect to various MQTT brokers. In this code example, the instructions to set up and run the MQTT client have been provided for the AWS IoT and local Mosquitto MQTT brokers for reference. See section [Setting up the MQTT broker](#setting-up-the-mqtt-broker) for more details.
 
 3. Install the Python interpreter and add it to the top of the system path in environmental variables. This code example is tested with [Python v3.8.10](https://www.python.org/downloads/release/python-3810/).
+
 
 ## Structure and overview
 
@@ -70,7 +76,9 @@ Build and program the MCUboot-based bootloader application into the CM0+ core, a
 
 This README expects you to be familiar with MCUboot and its concepts. See [MCUboot basics](https://github.com/Infineon/mtb-example-mcuboot-basic/blob/master/README.md#mcuboot-basics) and MCUboot repository on [GitHub](https://github.com/mcu-tools/mcuboot/tree/v1.9.1-cypress/boot/cypress) for more information.
 
+
 ## Using the code example
+
 
 ### Create the project
 
@@ -102,6 +110,7 @@ The ModusToolbox&trade; tools package provides the Project Creator as both a GUI
 
 </details>
 
+
 <details><summary><b>Use Project Creator CLI</b></summary>
 
 The 'project-creator-cli' tool can be used to create applications from a CLI terminal or from within batch files or shell scripts. This tool is available in the *{ModusToolbox&trade; install directory}/tools_{version}/project-creator/* directory.
@@ -113,6 +122,7 @@ The following example clones the "[mtb-example-ethernet-ota-mqtt](https://github
    ```
    project-creator-cli --board-id KIT_XMC72_EVK --app-id mtb-example-ethernet-ota-mqtt --user-app-name OTA_MQTT --target-dir "C:/mtb_projects"
    ```
+
 
 The 'project-creator-cli' tool has the following arguments:
 
@@ -129,9 +139,11 @@ Argument | Description | Required/optional
 
 </details>
 
+
 ### Open the project
 
 After the project has been created, you can open it in your preferred development environment.
+
 
 <details><summary><b>Eclipse IDE</b></summary>
 
@@ -141,6 +153,7 @@ For more details, see the [Eclipse IDE for ModusToolbox&trade; user guide](https
 
 </details>
 
+
 <details><summary><b>Visual Studio (VS) Code</b></summary>
 
 Launch VS Code manually, and then open the generated *{project-name}.code-workspace* file located in the project directory.
@@ -148,6 +161,7 @@ Launch VS Code manually, and then open the generated *{project-name}.code-worksp
 For more details, see the [Visual Studio Code for ModusToolbox&trade; user guide](https://www.infineon.com/MTBVSCodeUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mt_vscode_user_guide.pdf*).
 
 </details>
+
 
 <details><summary><b>Keil µVision</b></summary>
 
@@ -157,6 +171,7 @@ For more details, see the [Keil µVision for ModusToolbox&trade; user guide](htt
 
 </details>
 
+
 <details><summary><b>IAR Embedded Workbench</b></summary>
 
 Open IAR Embedded Workbench manually, and create a new project. Then select the generated *{project-name}.ipcf* file located in the project directory.
@@ -164,6 +179,7 @@ Open IAR Embedded Workbench manually, and create a new project. Then select the 
 For more details, see the [IAR Embedded Workbench for ModusToolbox&trade; user guide](https://www.infineon.com/MTBIARUserGuide) (locally available at *{ModusToolbox&trade; install directory}/docs_{version}/mt_iar_user_guide.pdf*).
 
 </details>
+
 
 <details><summary><b>Command line</b></summary>
 
@@ -173,12 +189,15 @@ For more details, see the [ModusToolbox&trade; tools package user guide](https:/
 
 </details>
 
+
 ## Testing flow of OTA MQTT application
+
 To test the flow of an OTA MQTT application, follow the flow chart as shown in **Figure 1**.
 
-   **Figure 1. Testing flow of OTA MQTT application**
+**Figure 1. Testing flow of OTA MQTT application**
 
-   ![](images/testing_flow_of_ota_mqtt_application.png)
+![](images/testing_flow_of_ota_mqtt_application.png)
+
 
 ## Building and programming MCUboot
 
@@ -190,6 +209,7 @@ The [mtb-example-mcuboot-basic](https://github.com/Infineon/mtb-example-mcuboot-
 1. Import the [mtb-example-mcuboot-basic](https://github.com/Infineon/mtb-example-mcuboot-basic) code example per the instructions in the [Using the code example](https://github.com/Infineon/mtb-example-mcuboot-basic/blob/master/README.md#using-the-code-example) section of its README.
 
    The MCUboot-based bootloader and OTA MQTT applications must have the same understanding of the memory layout. The memory layout is defined through JSON files. The OTA MQTT application provides a set of predefined JSON files that can be readily used.
+
    > **Note:** Both the MCUboot-based bootloader and OTA MQTT applications must use the same JSON file.
 
    The *\<OTA_MQTT>/flashmap* folder contains the pre-defined *flashmap* JSON files. The following files are supported by this example.
@@ -211,7 +231,7 @@ The [mtb-example-mcuboot-basic](https://github.com/Infineon/mtb-example-mcuboot-
 
 5. Open a CLI terminal.
 
-   On Linux and macOS, you can use any terminal application. On Windows, from the Start menu, open the **modus-shell** app.
+   On Linux and macOS, you can use any terminal application. On Windows, from the Start menu, open the **modus-shell** application.
 
 6. Navigate the terminal to the *\<mtb_shared>/mcuboot/\<tag>/scripts* folder.
 
@@ -230,7 +250,7 @@ The [mtb-example-mcuboot-basic](https://github.com/Infineon/mtb-example-mcuboot-
 
 8. Open a serial terminal emulator and select the KitProg3 COM port. Set the serial port parameters to 8N1 and 115200 baud.
 
-9. Build and program the bootloader application per the [Step-by-step instructions](https://github.com/Infineon/mtb-example-mcuboot-basic/blob/master/README.md#step-by-step-instructions) in its README or follow the instruction as given below.
+9. Build and program the bootloader application per the [Step-by-step instructions](https://github.com/Infineon/mtb-example-mcuboot-basic/blob/master/README.md#step-by-step-instructions) in its README or follow the instructions as given below.
 
    <details open><summary><b>Using CLI</b></summary>
 
@@ -241,14 +261,15 @@ The [mtb-example-mcuboot-basic](https://github.com/Infineon/mtb-example-mcuboot-
       ```
    </details>
 
-    After programming, MCUboot starts automatically. Confirm that the UART terminal displays a message as shown in **Figure 2**:
+    After programming, the MCUboot starts automatically. Confirm that the UART terminal displays a message as shown in **Figure 2**.
 
-    **Figure 2. Booting with no bootable image**
+   **Figure 2. Booting with no bootable image**
 
-    ![](images/booting_without_bootable_image.png)
+   ![](images/booting_without_bootable_image.png)
 
 
 ## Setting up the MQTT broker
+
 
 ### Using AWS IoT Core
 
@@ -281,12 +302,10 @@ The [mtb-example-mcuboot-basic](https://github.com/Infineon/mtb-example-mcuboot-
    - *xxxxxxxxxx.aws-client-certificate.crt*    to     *aws_client.crt*
    - *xxxxxxxxxx.aws-private.key*    to      *aws_private.key*
 
-</details>
-
 
 ### Mosquitto local broker
 
-This code example uses the locally installable Mosquitto that runs on your computer as the default broker. You can also use one of the other public MQTT brokers listed at [https://github.com/mqtt/mqtt.github.io/wiki/public_brokers](https://github.com/mqtt/mqtt.github.io/wiki/public_brokers).
+This code example uses the locally installable Mosquitto that runs on your computer as the default broker. You can also use one of the other public MQTT brokers listed at [public_brokers](https://github.com/mqtt/mqtt.github.io/wiki/public_brokers).
 
 1. Download the executable from [Mosquitto downloads](https://mosquitto.org/download/) site.
 
@@ -300,7 +319,7 @@ This code example uses the locally installable Mosquitto that runs on your compu
 
 5. Navigate to the *\<OTA_MQTT>/scripts/* folder.
 
-6. Execute the following command to generate self-signed SSL certificates and keys. On Linux and macOS, you can get your device local IP address by running the `ifconfig` command on any terminal application. On Windows, run the `ipconfig` command on a command prompt.
+6. Execute the following command to generate self-signed SSL certificates and keys. On Linux and macOS, you can get your device-local IP address by running the `ifconfig` command on any terminal application. On Windows, run the `ipconfig` command on a command prompt.
 
    ```
    sh generate_ssl_cert.sh <local-ip-address-of-your-pc>
@@ -313,12 +332,12 @@ This code example uses the locally installable Mosquitto that runs on your compu
 
    This step will generate the following files in the same *\<OTA_MQTT>/scripts/* directory:
 
-   - *mosquitto_ca.crt* - Root CA certificate
-   - *mosquitto_ca.key* - Root CA private key
-   - *mosquitto_server.crt* - Server certificate
-   - *mosquitto_server.key* - Server private key
-   - *mosquitto_client.crt* - Client certificate
-   - *mosquitto_client.key* - Client private key
+   - *mosquitto_ca.crt* – Root CA certificate
+   - *mosquitto_ca.key* – Root CA private key
+   - *mosquitto_server.crt* – Server certificate
+   - *mosquitto_server.key* – Server private key
+   - *mosquitto_client.crt* – Client certificate
+   - *mosquitto_client.key* – Client private key
 
 7. The *\<OTA_MQTT>/scripts/mosquitto.conf* file is pre-configured for starting the Mosquitto server for this code example. You can edit the file if you wish to make other changes to the broker settings.
 
@@ -341,13 +360,13 @@ This code example uses the locally installable Mosquitto that runs on your compu
         ```
         mosquitto -v -c mosquitto.conf
         ```
-</details>
+
 
 ## Setting up the MQTT publisher script
 
 1. Open a CLI terminal.
 
-   On Linux and macOS, you can use any terminal application. On Windows, from the Start menu, open *modus-shell* app.
+   On Linux and macOS, you can use any terminal application. On Windows, from the Start menu, open *modus-shell* application.
 
 2. Navigate to the *\<OTA_MQTT>/scripts* folder.
 
@@ -366,27 +385,31 @@ This code example uses the locally installable Mosquitto that runs on your compu
       ```
 
    2. Modify the value of the `AMAZON_BROKER_ADDRESS` variable to your custom endpoint on the **Settings** page of the AWS IoT console. This has the format `ABCDEFG1234567.iot.<region>.amazonaws.com`.
+      
       > **Note:** If you are using the local MQTT broker (e.g., Mosquitto broker), modify the value of `MOSQUITTO_BROKER_LOCAL_ADDRESS` to the local IP address of your MQTT broker.
 
    3. Ensure the value of the `BROKER_ADDRESS` variable is `AMAZON_BROKER_ADDRESS`.
+      
       > **Note:** If you are using the local MQTT broker (e.g., Mosquitto broker), modify the value of `BROKER_ADDRESS` to `MOSQUITTO_BROKER_LOCAL_ADDRESS`.
 
    4. Ensure that the value of the `TLS_ENABLED` variable is `True`.
 
    5. Ensure that the value of the `BROKER_PORT` variable is `8883`.
+       
        > **Note:** If you are using the local MQTT broker (e.g., Mosquitto broker), ensure that the value of `BROKER_PORT` variable is `8884`. Currently in the *publisher.py* file conditional `if-else` block is used to automatically select a `BROKER_PORT` value based on the selected MQTT broker.
 
-4. Ensure that the certificate and key file names in the *\<OTA_MQTT>/scripts* folder and following variables value in the *\<OTA_MQTT>/scripts/publisher.py* file are same.
+4. Ensure that the certificate and key file names in the *\<OTA_MQTT>/scripts* folder and following variables value in the *\<OTA_MQTT>/scripts/publisher.py* file are the same.
       - `ca_certs` = "aws_ca.crt"
       - `certfile` = "aws_client.crt"
       - `keyfile`  = "aws_private.key"
 
       These variables are present under the `AMAZON BROKER` section at the last line in the *\<OTA_MQTT>/scripts/publisher.py* file.
+      
       > **Note:** If you are using the local MQTT broker (e.g., Mosquitto broker), ensure that the certificate and key file names in the *\<OTA_MQTT>/scripts* folder and these variables value in the *\<OTA_MQTT>/scripts/publisher.py* file under the `MOSQUITTO_BROKER_LOCAL_ADDRESS` section are the same. Currently in the *publisher.py* file, the conditional `if-else` block is used to automatically select the default certificate and key file names based on the selected MQTT broker.
 
 5. Run the *publisher.py* Python script.
 
-    The scripts take arguments such as the kit name, broker URL, and file path. For details on the supported arguments and their usage, execute the following command:
+    The scripts take arguments, such as the kit name, broker URL, and file path. For details on the supported arguments and their usage, execute the following command:
 
      > **Note:** For Linux and macOS platforms, use `python3` instead of `python` in the following command.
 
@@ -413,9 +436,9 @@ This code example uses the locally installable Mosquitto that runs on your compu
 
 2. Open a terminal program and select the KitProg3 COM port. Set the serial port parameters to 8N1 and 115200 baud.
 
-3. Modify the `PLATFORM` variable in the *\<OTA_MQTT>/Makefile* based on the target you have selected. Currently in the Makefile, a conditional if-else block is used to automatically select a value based on the target selected. You can remove it and directly assign a value as per **Table 2**.
+3. Modify the `PLATFORM` variable in the *\<OTA_MQTT>/Makefile* based on the target that you have selected. Currently in the Makefile, a conditional if-else block is used to automatically select a value based on the target selected. You can remove it and directly assign a value as per **Table 2**.
 
-   **Table 2: Target-specific platform values**
+   **Table 2. Target-specific platform values**
 
    Target      | `PLATFORM` value
    ----------- |----------------------------------
@@ -426,9 +449,9 @@ This code example uses the locally installable Mosquitto that runs on your compu
 
 4. Modify the `OTA_FLASH_MAP` variable in the *\<OTA_MQTT>/Makefile* to change the JSON file name to match the selection made while programming the MCUboot-based bootloader application. Currently in the Makefile, a conditional `if-else` block is used to automatically select a default flash map file based on the target selected. You can remove it and directly assign the path of the required flash map file to the `OTA_FLASH_MAP` variable.
 
-   The *\<OTA_MQTT>/flashmap* folder contains the predefined flashmap JSON files. The following files are supported by this example:
+   The *\<OTA_MQTT>/flashmap* folder contains the predefined flashmap JSON files. The following files are supported by this example.
 
-   **Table 3: Supported JSON files**
+   **Table 3. Supported JSON files**
 
    Target      | Supported JSON files
    ----------- |----------------------------------
@@ -441,7 +464,7 @@ This code example uses the locally installable Mosquitto that runs on your compu
 
 5. Edit the *\<OTA_MQTT>/configs/ota_app_config.h* file to configure your OTA MQTT application:
 
-   1. If you are using the local MQTT broker (e.g., Mosquitto broker), make sure that the device running the MQTT local broker and the kit are connected to the same network.
+   1. If you are using the local MQTT broker (e.g., Mosquitto broker), ensure that the device running the MQTT local broker and the kit are connected to the same network.
 
    2. Modify the value of the `MQTT_BROKER_URL` macro to your custom endpoint on the **Settings** page of the AWS IoT console. This has the format `abcdefg1234567.iot.<region>.amazonaws.com`.
 
@@ -451,7 +474,7 @@ This code example uses the locally installable Mosquitto that runs on your compu
 
        > **Note:** If you are using the local MQTT broker (e.g., Mosquitto broker), modify the value of `MQTT_SERVER_PORT` to `8884`. If the code example has been configured to work in non-TLS mode, set the value of `MQTT_SERVER_PORT` to `1883`.
 
-   4. By default, this code example works in TLS mode. To use the example in non-TLS mode, modify `ENABLE_TLS` to `false` and skip the next step of adding the certificate.
+   4. By default, this code example works in TLS mode. To use the example in non-TLS mode, modify `ENABLE_TLS` to **false** and skip the next step of adding the certificate.
 
    5. Add the certificates and key:
 
@@ -459,7 +482,7 @@ This code example uses the locally installable Mosquitto that runs on your compu
 
           On Linux and macOS, you can use any terminal application. On Windows, from the Start menu, open **modus-shell** app.
 
-      2. Navigate the terminal to *\<OTA_MQTT>/scripts* directory.
+      2. Navigate the terminal to the *\<OTA_MQTT>/scripts* directory.
 
       3. Run the *format_cert_key.py* Python script to generate the string format of the certificate and key files that can be added as a macro. Pass the name of the certificate or key with the extension as an argument to the Python script:
 
@@ -506,10 +529,12 @@ This code example uses the locally installable Mosquitto that runs on your compu
       2. In the **Quick Panel**, scroll down, and click **\<Application Name> Program (KitProg3_MiniProg4)**.
    </details>
 
+
    <details><summary><b>In other IDEs</b></summary>
 
    Follow the instructions in your preferred IDE.
    </details>
+
 
    <details><summary><b>Using CLI</b></summary>
 
@@ -524,17 +549,17 @@ This code example uses the locally installable Mosquitto that runs on your compu
       ```
    </details>
 
-   After programming, MCUboot will validate the primary image. After successfully validating the primary image, MCUboot let the CM7 core run the image from the primary slot. Observe that the user LED blinks at a 1-second interval. Observe the messages on the UART terminal and wait for the device to make the required connections. Once the MQTT client (device) is connected to the broker, it will download the job document (*ota_update.json*) as shown in **Figure 4**.
+   After programming, MCUboot will validate the primary image. After successfully validating the primary image, MCUboot let the CM7 core run the image from the primary slot. Observe that the user LED blinks at a one second interval. Observe the messages on the UART terminal and wait for the device to make the required connections. Once the MQTT client (device) is connected to the broker, it will download the job document (*ota_update.json*) as shown in **Figure 4**.
 
-    **Figure 4. Connection to the MQTT broker and downloaded the job document**
+   **Figure 4. Connection to the MQTT broker and downloaded the job document**
 
-    ![](images/connection_mqtt_broker.png)
+   ![](images/connection_mqtt_broker.png)
 
-    **Figure 5** shows the logs of publisher while publishing the job document.
+   **Figure 5** shows the logs of publisher while publishing the job document.
 
-    **Figure 5. Publishing the job document**
+   **Figure 5. Publishing the job document**
 
-    ![](images/publishing_the_job_doc.png)
+   ![](images/publishing_the_job_doc.png)
 
    <br>
 
@@ -542,9 +567,9 @@ This code example uses the locally installable Mosquitto that runs on your compu
 
 9. Modify the value of the `BLINKY_DELAY_MS` macro to **(100)** in the *\<OTA_MQTT>/source/led_task.c* file and change the application version in the *\<OTA_MQTT>/Makefile* by setting `APP_VERSION_MINOR` to **1**.
 
-9. Build the application (**Do not** program it to the kit). This new image will be published to the MQTT broker in the following steps to demonstrate the OTA update.
+10. Build the application (**Do not** program it to the kit). This new image will be published to the MQTT broker in the following steps to demonstrate the OTA update.
 
-   <details><summary><b>In Eclipse IDE</b></summary>
+    <details><summary><b>In Eclipse IDE</b></summary>
 
       1. Select the application project in the Project Explorer.
 
@@ -561,11 +586,11 @@ This code example uses the locally installable Mosquitto that runs on your compu
          ```
          make build TOOLCHAIN=GCC_ARM
          ```
- </details>
+    </details>
 
-10. After a successful build, edit the *\<OTA_MQTT>/scripts/ota_update.json* file to modify the value of `Version` to **1.1.0**.
+11. After a successful build, edit the *\<OTA_MQTT>/scripts/ota_update.json* file to modify the value of `Version` to **1.1.0**.
 
-    The OTA MQTT application now finds and downloads the updated job document resulting in the available update version which is higher than the OTA MQTT application version. So, the OTA MQTT application starts to download the new image as shown in **Figure 7** and places it in the secondary slot. Once the download is completed, a soft reset is issued. Then the MCUboot starts the image upgrade process (swapping the images between the primary and secondary slots, after successfully validating the secondary image).
+    The OTA MQTT application now finds and downloads the updated job document resulting in the available update version which is higher than the OTA MQTT application version. So, the OTA MQTT application starts to download the new image as shown in **Figure 7** and places it in the secondary slot. Once the download is completed, a soft reset is issued. Then the MCUboot starts the image upgrade process (swapping the images between the primary and secondary slots after successfully validating the secondary image).
 
     **Figure 6** shows the logs of publisher while publishing the new image.
 
@@ -573,18 +598,17 @@ This code example uses the locally installable Mosquitto that runs on your compu
 
     ![](images/publishing_the_new_image.png)
 
-
     **Figure 7. Image download**
 
     ![](images/downloading_new_image.png)
 
-11. After the image upgrade is completed successfully, MCUboot lets the CM7 core run the new image from the primary slot. Observe that the user LED is now blinking at a 100-millisecond interval and The UART terminal displays the message as shown in **Figure 8**.
+12. After the image upgrade is completed successfully, MCUboot lets the CM7 core run the new image from the primary slot. Observe that the user LED is now blinking at a 100-millisecond interval and the UART terminal displays the message as shown in **Figure 8**.
 
     **Figure 8. Updated to new image**
 
     ![](images/updated_to_new_image.png)
 
-12. To test the revert feature of MCUboot, send a bad image as **v1.2.0** OTA update. The bad image used in this example is an infinite loop. The watchdog timer will reset the bad image and upon reboot, MCUboot will revert the primary image back to **v1.1.0** good image. Edit *\<OTA_MQTT>/Makefile* and add `TEST_REVERT` to the `Defines` variable as shown:
+13. To test the revert feature of MCUboot, send a bad image as **v1.2.0** OTA update. The bad image used in this example is an infinite loop. The watchdog timer will reset the bad image and upon reboot, MCUboot will revert the primary image back to **v1.1.0** good image. Edit *\<OTA_MQTT>/Makefile* and add `TEST_REVERT` to the `Defines` variable as shown:
 
       ```
       DEFINES+=TEST_REVERT
@@ -595,19 +619,20 @@ This code example uses the locally installable Mosquitto that runs on your compu
 
     See the [MCUboot basics](https://github.com/Infineon/mtb-example-mcuboot-basic/blob/master/README.md#mcuboot-basics) of the [mtb-example-mcuboot-basic](https://github.com/Infineon/mtb-example-mcuboot-basic) code example for more details about the overwrite-based and swap-based upgrades.
 
-13. Edit the application version in the *\<OTA_MQTT>/Makefile* by setting `APP_VERSION_MINOR` to **2**.
+14. Edit the application version in the *\<OTA_MQTT>/Makefile* by setting `APP_VERSION_MINOR` to **2**.
 
-14. Build the application as per **Step 10**.
+15. Build the application as per **Step 10**.
 
-15. After a successful build, edit the *\<OTA_MQTT>/scripts/ota_update.json* file to modify the value of `Version` to **1.2.0**.
+16. After a successful build, edit the *\<OTA_MQTT>/scripts/ota_update.json* file to modify the value of `Version` to **1.2.0**.
 
-16. The OTA MQTT application will now find this new **v1.2.0** image and update to it. After the update, the watchdog timer resets the devices within a few seconds. Upon reset, MCUboot reverts to the **v1.1.0** good image. The UART terminal displays the message as shown in **Figure 9**.
+17. The OTA MQTT application will now find this new **v1.2.0** image and updates it. After the update, the watchdog timer resets the devices within a few seconds. Upon reset, MCUboot reverts to the **v1.1.0** good image. The UART terminal displays the message as shown in **Figure 9**.
 
     **Figure 9. Reverting to good image**
 
     ![](images/reverting_to_good_image.png)
 
-> **Note:** After the last step is complete, the device will be running the **v1.1.0** good image and the publisher will still be hosting the **v1.2.0** bad image. Because the version of the image hosted by the publisher is greater than the version of the image on the device, the device will redownload the **v1.2.0** bad image. This causes an infinite upgrade and reverts the cycle. To avoid this scenario, stop the publisher script after you test the code example. In a production environment, the application is responsible for blacklisting bad image versions and to avoid upgrading to them in the future.
+      > **Note:** After the last step is complete, the device will be running the **v1.1.0** good image and the publisher will still be hosting the **v1.2.0** bad image. Because the version of the image hosted by the publisher is greater than the version of the image on the device, the device will download again the **v1.2.0** bad image. This causes an infinite upgrade and reverts the cycle. To avoid this scenario, stop the publisher script after you test the code example. In a production environment, the application is responsible for blacklisting bad image versions and to avoid upgrading to them in the future.
+
 
 ## Debugging
 
@@ -624,6 +649,7 @@ Use the **\<Application Name> Debug (KitProg3_MiniProg4)** configuration in the 
 <details><summary><b>In other IDEs</b></summary>
 
 Follow the instructions in your preferred IDE.
+
 </details>
 
 
@@ -647,7 +673,7 @@ This example implements two RTOS tasks: OTA client and LED blinky. Both these ta
 
 All the source files related to the two tasks are placed under the *\<OTA_MQTT>/source* folder:
 
-**Table 4: Source files related to OTA client and LED blinky**
+**Table 4. Source files related to OTA client and LED blinky**
 
 File | Description
 :-----|:------
@@ -662,7 +688,7 @@ File | Description
 
 All the scripts and configurations needed for this example are placed under the *\<OTA_MQTT>/scripts* folder:
 
-**Table 5: Scripts and configuration files for OTA update over MQTT**
+**Table 5. Scripts and configuration files for OTA update over MQTT**
 
 File | Description
 :-----|:------
@@ -674,19 +700,20 @@ File | Description
 
 <br>
 
-The *\<OTA_MQTT>/configs* folder contains other configurations related to the OTA middleware, FreeRTOS, and MBEDTLS.
+The *\<OTA_MQTT>/configs* folder contains other configurations related to the OTA middleware, FreeRTOS, and MbedTLS.
 
-**Table 6: Application configuration files**
+**Table 6. Application configuration files**
 
 File | Description
 :-----|:------
-*ota_app_config.h* | Contains the OTA configuration macros such as MQTT broker details, certificates, and key
-*cy_ota_config.h* | Contains the OTA middleware level configuration macros
-*mbedtls_user_config.h* | Contains the mbedtls configuration macros
-*COMPONENT_CM7/FreeRTOSConfig.h* | Contains the FreeRTOS configuration macros for XMC7000 family
-*COMPONENT_MCUBOOT/flash/cy_ota_flash.c* | Contains OTA flash operation APIs
+*ota_app_config.h* | Contains the OTA configuration macros, such as MQTT broker details, certificates, and key.
+*cy_ota_config.h* | Contains the OTA middleware level configuration macros.
+*mbedtls_user_config.h* | Contains the MbedTLS configuration macros.
+*COMPONENT_CM7/FreeRTOSConfig.h* | Contains the FreeRTOS configuration macros for XMC7000 family.
+*COMPONENT_MCUBOOT/flash/cy_ota_flash.c* | Contains OTA flash operation APIs.
 
 <br>
+
 
 ### Security
 
@@ -694,11 +721,12 @@ The MCUboot-based bootloader application enables the image authentication featur
 
 The MCUboot-based bootloader application includes a sample public key (*cypress-test-ec-p256.pub*) under the *\<MCUboot>/keys* directory and the OTA MQTT application includes a sample private key (*cypress-test-ec-p256.pem*) under the *\<mtb_shared>/ota-bootloader-abstraction/\<tag>/scripts/mcuboot/keys* directory. Both the *\<MCUboot>/keys* and *\<mtb_shared>/ota-bootloader-abstraction/\<tag>/scripts/mcuboot/keys* directories **must have the same pair of keys**. Otherwise image (primary/secondary) validation fails; the MCUboot-based bootloader application prints a message "MCUBoot Bootloader found none of bootable images".
 
-**Do not use this key pair in your end product.** See [Generating a key pair](https://github.com/Infineon/mtb-example-mcuboot-basic/blob/master/README.md#generating-a-key-pair) for generating a new key pair. Once you generated the key pair, copy the keys to the both *\<MCUboot>/keys* and *\<mtb_shared>/ota-bootloader-abstraction/\<tag>/scripts/mcuboot/keys* directories.
+**Do not use this key pair in your end product.** See [Generating a key pair](https://github.com/Infineon/mtb-example-mcuboot-basic/blob/master/README.md#generating-a-key-pair) for generating a new key pair. Once you generated the key pair, copy the keys to both the *\<MCUboot>/keys* and *\<mtb_shared>/ota-bootloader-abstraction/\<tag>/scripts/mcuboot/keys* directories.
 
 > **Note:** See [Security](https://github.com/Infineon/mtb-example-mcuboot-basic/blob/master/README.md#security) to learn more about the image authentication feature of MCUboot.
 
-Currently this code example uses the TLS v1.2. To use the TLS v1.3, uncomment the `MBEDTLS_SSL_PROTO_TLS1_3` and `FORCE_TLS_VERSION MBEDTLS_SSL_VERSION_TLS1_3` defines in the mbedtls_user_config.h file. However, note that the socket receive fails if the application establishes TLS v1.3 connection to a server where session tickets are enabled. This is due to a bug in third-party MBEDTLS library.
+Currently this code example uses the TLS v1.2. To use the TLS v1.3, uncomment the `MBEDTLS_SSL_PROTO_TLS1_3` and `FORCE_TLS_VERSION MBEDTLS_SSL_VERSION_TLS1_3` defines in the *mbedtls_user_config.h* file. However, note that the socket receive fails if the application establishes TLS v1.3 connection to a server where session tickets are enabled. This is due to a bug in third-party MbedTLS library.
+
 
 ### Resources and settings
 
@@ -711,24 +739,27 @@ Currently this code example uses the TLS v1.2. To use the TLS v1.3, uncomment th
 
 <br>
 
+
 ## Related resources
 
 Resources  | Links
 -----------|----------------------------------
-Application notes  | [AN234334](https://www.infineon.com/dgdl/Infineon-AN234334_Getting_started_with_XMC7000_MCU_on_ModusToolbox_software-ApplicationNotes-v01_00-EN.pdf?fileId=8ac78c8c8412f8d301842d32c5765bfd) – Getting started with XMC7000 MCU on ModusToolbox&trade; <br> [AN234023](https://www.infineon.com/dgdl/Infineon-AN234023-Smart_IO_usage_setup_in_XMC7000_family-ApplicationNotes-v01_00-EN.pdf?fileId=8ac78c8c8412f8d301845123d1704f20) – Smart IO usage setup in XMC7000 family
+Application notes  | [AN234334](https://www.infineon.com/dgdl/Infineon-AN234334_Getting_started_with_XMC7000_MCU_on_ModusToolbox_software-ApplicationNotes-v01_00-EN.pdf?fileId=8ac78c8c8412f8d301842d32c5765bfd) – Getting started with XMC7000 MCU on ModusToolbox&trade; <br> [AN234023](https://www.infineon.com/dgdl/Infineon-AN234023-Smart_IO_usage_setup_in_XMC7000_family-ApplicationNotes-v01_00-EN.pdf?fileId=8ac78c8c8412f8d301845123d1704f20) – Smart I/O usage setup in XMC7000 family
 Code examples  | [Using ModusToolbox&trade;](https://github.com/Infineon/Code-Examples-for-ModusToolbox-Software) on GitHub
-Device documentation | [XMC7000 MCU datasheets](https://www.infineon.com/cms/en/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-cortex-m/32-bit-xmc7000-industrial-microcontroller-arm-cortex-m7) <br> [XMC7000 reference manuals](https://www.infineon.com/cms/en/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-cortex-m/32-bit-xmc7000-industrial-microcontroller-arm-cortex-m7)
-Development kits | Select your kits from the [Evaluation board finder](https://www.infineon.com/cms/en/design-support/finder-selection-tools/product-finder/evaluation-board) <br> [XMC&trade; evaluation boards](https://www.infineon.com/cms/en/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-cortex-m/#boards)
-Libraries on GitHub | [mtb-pdl-cat1](https://github.com/Infineon/mtb-pdl-cat1) – Peripheral Driver Library (PDL)  <br> [mtb-hal-cat1](https://github.com/Infineon/mtb-hal-cat1) – Hardware Abstraction Layer (HAL) library
+Device documentation | [XMC7000 MCU documents](https://www.infineon.com/cms/en/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-cortex-m/32-bit-xmc7000-industrial-microcontroller-arm-cortex-m7)
+Development kits | Select your kits from the [Evaluation board finder](https://www.infineon.com/cms/en/design-support/finder-selection-tools/product-finder/evaluation-board).
+Libraries on GitHub | [mtb-pdl-cat1](https://github.com/Infineon/mtb-pdl-cat1) – Peripheral Driver Library (PDL)  <br> [mtb-hal-cat1](https://github.com/Infineon/mtb-hal-cat1) – Hardware Abstraction Layer (HAL) Library
 Middleware on GitHub  | [libraries](https://github.com/Infineon/modustoolbox-software?tab=readme-ov-file#libraries) – Links to all drivers and middleware<br>[MCUboot](https://github.com/mcu-tools/mcuboot) – Open-source library enabling the development of secure bootloader applications for 32-bit MCUs <br> [retarget-io](https://github.com/Infineon/retarget-io) – Utility library to retarget STDIO messages to a UART port <br> [ota-update](https://github.com/Infineon/ota-update) – OTA library and docs <br> [wifi-mw-core](https://github.com/Infineon/wifi-mw-core) – Wi-Fi middleware core library and docs <br> [ota-bootloader-abstraction](https://github.com/Infineon/ota-bootloader-abstraction) - OTA MCUboot-based bootloader abstraction <br> [http-client](https://github.com/Infineon/http-client) – HTTP client library and docs
-Tools  | [ModusToolbox&trade;](https://www.infineon.com/modustoolbox) – ModusToolbox&trade; software is a collection of easy-to-use libraries and tools enabling rapid development with Infineon MCUs for applications ranging from wireless and cloud-connected systems, edge AI/ML, embedded sense and control, to wired USB connectivity using PSoC&trade; Industrial/IoT MCUs, AIROC&trade; Wi-Fi and Bluetooth&reg; connectivity devices, XMC&trade; Industrial MCUs, and EZ-USB&trade;/EZ-PD&trade; wired connectivity controllers. ModusToolbox&trade; incorporates a comprehensive set of BSPs, HAL, libraries, configuration tools, and provides support for industry-standard IDEs to fast-track your embedded application development.
+Tools  | [ModusToolbox&trade;](https://www.infineon.com/modustoolbox) – ModusToolbox&trade; software is a collection of easy-to-use libraries and tools enabling rapid development with Infineon MCUs for applications ranging from wireless and cloud-connected systems, edge AI/ML, embedded sense and control, to wired USB connectivity using PSOC&trade; Industrial/IoT MCUs, AIROC&trade; Wi-Fi and Bluetooth&reg; connectivity devices, XMC&trade; Industrial MCUs, and EZ-USB&trade;/EZ-PD&trade; wired connectivity controllers. ModusToolbox&trade; incorporates a comprehensive set of BSPs, HAL, libraries, configuration tools, and provides support for industry-standard IDEs to fast-track your embedded application development.
+
 <br>
+
 
 ## Other resources
 
 Infineon provides a wealth of data at [www.infineon.com](https://www.infineon.com) to help you select the right device, and quickly and effectively integrate it into your design.
 
-For XMC&trade; MCU devices, see [32-bit XMC&trade; Industrial microcontroller based on Arm&reg; Cortex&reg;-M](https://www.infineon.com/cms/en/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-cortex-m/).
+For XMC&trade; MCU devices, see [32-bit XMC&trade; industrial microcontroller based on Arm&reg; Cortex&reg;-M](https://www.infineon.com/cms/en/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-cortex-m/).
 
 
 ## Document history
@@ -739,11 +770,14 @@ Document title: *CE240102* – *OTA firmware update using MQTT*
  ------- | ---------------------
  1.0.0   | New code example
  2.0.0   | Updated to support Ethernet Connection Manager (ECM) v2.0 <br> Added support for KIT_XMC71_EVK_LITE_V1
+ 2.1.0   | Enabled D-cache support for XMC7000 devices
 <br>
+
 
 All referenced product or service names and trademarks are the property of their respective owners.
 
 The Bluetooth&reg; word mark and logos are registered trademarks owned by Bluetooth SIG, Inc., and any use of such marks by Infineon is under license.
+
 
 ---------------------------------------------------------
 
